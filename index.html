@@ -2,117 +2,231 @@
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Mon Site Sécurisé</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RASO - Investissement & Gains</title>
     <style>
-        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9; }
-        h1 { color: #333; }
-        p { color: #666; }
-        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
-        .btn:hover { background: #0056b3; }
-    </style>
-</head>
-<body>
-    <h1>Bienvenue sur mon nouveau site sécurisé</h1>
-    <p>Plateforme de transactions et de gestion indépendante.</p>
-    
-    <div>
-        <a href="dashboard.html" class="btn">Accéder à l'Espace Utilisateur</a>
-    </div>
-</body>
-</html><!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Mon Tableau de Bord</title>
-    <style>
-        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
-        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 400px; margin: 20px auto; }
-        input, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
-        button { background: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; }
-        button:hover { background: #218838; }
-        .balance { font-size: 24px; color: #333; text-align: center; margin-bottom: 20px; }
-        .back-link { display: block; text-align: center; margin-top: 15px; color: #007bff; text-decoration: none; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body { background-color: #f8f9fa; color: #333; padding-bottom: 70px; }
+        
+        /* En-tête */
+        .header { background: linear-gradient(135deg, #d32f2f, #b71c1c); color: white; padding: 20px; text-align: center; border-bottom-left-radius: 20px; border-bottom-right-radius: 20px; }
+        .logo { width: 60px; height: 60px; background: white; color: #d32f2f; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; font-size: 20px; margin: 0 auto 10px; border: 3px solid #ffcdd2; }
+        
+        /* Soldes */
+        .balance-card { background: white; margin: -20px 15px 15px; padding: 15px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); display: flex; justify-content: space-around; text-align: center; }
+        .balance-item h4 { font-size: 12px; color: #777; margin-bottom: 5px; }
+        .balance-item p { font-size: 18px; font-weight: bold; color: #d32f2f; }
+
+        /* Grille des fonctionnalités */
+        .grid-menu { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; padding: 15px; background: white; margin: 0 15px 15px; border-radius: 12px; text-align: center; box-shadow: 0 2px 6px rgba(0,0,0,0.05); }
+        .menu-btn { display: flex; flex-direction: column; align-items: center; font-size: 11px; font-weight: 600; color: #444; cursor: pointer; text-decoration: none; }
+        .menu-btn .icon { width: 45px; height: 45px; background: #ffebee; color: #d32f2f; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 5px; }
+
+        /* Produits d'investissement */
+        .section-title { margin: 15px 20px 10px; font-size: 16px; font-weight: bold; color: #b71c1c; border-left: 4px solid #d32f2f; padding-left: 8px; }
+        .product-card { background: white; margin: 0 15px 15px; border-radius: 12px; padding: 15px; box-shadow: 0 2px 8px rgba(0,0,0,0.08); }
+        .product-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; }
+        .product-tag { background: #d32f2f; color: white; padding: 4px 8px; border-radius: 6px; font-size: 12px; font-weight: bold; }
+        .product-details { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 12px; }
+        .buy-btn { width: 100%; padding: 10px; background: #d32f2f; color: white; border: none; border-radius: 8px; font-weight: bold; font-size: 14px; cursor: pointer; }
+
+        /* Modal / Popup */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.6); display: flex; align-items: center; justify-content: center; z-index: 1000; }
+        .modal { background: white; width: 85%; max-width: 320px; border-radius: 15px; padding: 20px; text-align: center; }
+        .modal h3 { color: #d32f2f; margin-bottom: 15px; }
+        .modal ul { text-align: left; font-size: 13px; color: #444; margin-bottom: 20px; list-style: none; }
+        .modal ul li { margin-bottom: 8px; }
+        .close-btn { width: 100%; padding: 10px; background: #d32f2f; color: white; border: none; border-radius: 8px; font-weight: bold; }
+
+        /* Menu de navigation bas */
+        .bottom-nav { position: fixed; bottom: 0; left: 0; width: 100%; background: white; display: flex; justify-content: space-around; padding: 10px 0; border-top: 1px solid #eee; box-shadow: 0 -2px 6px rgba(0,0,0,0.05); }
+        .nav-item { text-align: center; color: #777; font-size: 11px; text-decoration: none; }
+        .nav-item.active { color: #d32f2f; font-weight: bold; }
     </style>
 </head>
 <body>
 
-    <div class="card">
-        <h2>Espace Utilisateur</h2>
-        <div class="balance">Solde : <span id="user-balance">0</span> CFA</div>
-        
-        <hr>
-        
-        <h3>Faire un Dépôt Direct</h3>
-        <input type="number" id="deposit-amount" placeholder="Montant du dépôt (ex: 5000)">
-        <input type="text" id="deposit-ref" placeholder="Référence / Numéro de transaction">
-        <button onclick="submitDeposit()">Soumettre le dépôt</button>
-        
-        <a href="index.html" class="back-link">Retour à l'accueil</a>
+    <!-- Popup Bienvenue -->
+    <div class="modal-overlay" id="popup">
+        <div class="modal">
+            <div class="logo">RASO</div>
+            <h3>Bienvenue sur RASO</h3>
+            <ul>
+                <li>🚀 Bonus d'inscription : <strong>500 FCFA</strong></li>
+                <li>💰 Retrait minimum : <strong>1500 FCFA</strong></li>
+                <li>🔥 Commissions parrainage jusqu'à <strong>25 %</strong></li>
+            </ul>
+            <button class="close-btn" onclick="closePopup()">J'AI COMPRIS</button>
+        </div>
+    </div>
+
+    <!-- En-tête -->
+    <div class="header">
+        <div class="logo">RASO</div>
+        <h2>RASO PLATFORM</h2>
+    </div>
+
+    <!-- Carte Solde -->
+    <div class="balance-card">
+        <div class="balance-item">
+            <h4>Dépôt Solde</h4>
+            <p id="depot-solde">580 FCFA</p>
+        </div>
+        <div class="balance-item">
+            <h4>Bénéfice Solde</h4>
+            <p id="benefice-solde">0 FCFA</p>
+        </div>
+    </div>
+
+    <!-- Grille des actions -->
+    <div class="grid-menu">
+        <div class="menu-btn" onclick="demanderDepot()">
+            <div class="icon">📥</div>
+            <span>Dépôt</span>
+        </div>
+        <div class="menu-btn" onclick="demanderRetrait()">
+            <div class="icon">📤</div>
+            <span>Retrait</span>
+        </div>
+        <div class="menu-btn" onclick="alert('Pointage effectué ! +50 FCFA')">
+            <div class="icon">📅</div>
+            <span>Pointage</span>
+        </div>
+        <div class="menu-btn" onclick="alert('Lien de parrainage copié !')">
+            <div class="icon">🎁</div>
+            <span>Code Cadeau</span>
+        </div>
+    </div>
+
+    <!-- Liste des Produits -->
+    <div class="section-title">Produits d'investissement</div>
+
+    <div class="product-card">
+        <div class="product-header">
+            <h3>RASO #1</h3>
+            <span class="product-tag">0/4</span>
+        </div>
+        <div class="product-details">
+            Revenu journalier : <strong>1000 FCFA</strong><br>
+            Revenu total : <strong>60 000 FCFA</strong><br>
+            Durée : <strong>60 jours</strong><br>
+            Prix : <strong>4000 FCFA</strong>
+        </div>
+        <button class="buy-btn" onclick="acheterProduit('RASO #1', 4000)">ACHETER</button>
+    </div>
+
+    <div class="product-card">
+        <div class="product-header">
+            <h3>RASO #2</h3>
+            <span class="product-tag">0/4</span>
+        </div>
+        <div class="product-details">
+            Revenu journalier : <strong>1750 FCFA</strong><br>
+            Revenu total : <strong>105 000 FCFA</strong><br>
+            Durée : <strong>60 jours</strong><br>
+            Prix : <strong>7000 FCFA</strong>
+        </div>
+        <button class="buy-btn" onclick="acheterProduit('RASO #2', 7000)">ACHETER</button>
+    </div>
+
+    <!-- Barre de Navigation en bas -->
+    <div class="bottom-nav">
+        <a href="index.html" class="nav-item active">🏠<br>Accueil</a>
+        <a href="#" class="nav-item" onclick="alert('Aucune commande active')">📋<br>Commandes</a>
+        <a href="#" class="nav-item" onclick="alert('Votre code : RASO2026')">👥<br>Équipe</a>
+        <a href="#" class="nav-item" onclick="alert('Profil Utilisateur')">👤<br>Profil</a>
     </div>
 
     <script>
-        function submitDeposit() {
-            const amount = document.getElementById('deposit-amount').value;
-            const ref = document.getElementById('deposit-ref').value;
-            
-            if(!amount || !ref) {
-                alert("Veuillez remplir tous les champs !");
-                return;
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+        }
+
+        function demanderDepot() {
+            const montant = prompt("Entrez le montant à déposer (FCFA) :");
+            const ref = prompt("Entrez le numéro de référence Mobile Money / MTN / Orange :");
+            if (montant && ref) {
+                alert("Votre demande de dépôt de " + montant + " FCFA (Réf: " + ref + ") a été transmise à l'administrateur pour validation.");
             }
-            
-            alert("Votre demande de dépôt de " + amount + " CFA a bien été envoyée. En attente de validation.");
+        }
+
+        function demanderRetrait() {
+            const montant = prompt("Entrez le montant à retirer (Minimum 1500 FCFA) :");
+            if (montant >= 1500) {
+                alert("Demande de retrait de " + montant + " FCFA enregistrée.");
+            } else if (montant) {
+                alert("Le montant minimum de retrait est de 1500 FCFA.");
+            }
+        }
+
+        function acheterProduit(nom, prix) {
+            if (confirm("Voulez-vous acheter " + nom + " pour " + prix + " FCFA ?")) {
+                alert("Solde insuffisant ! Veuillez effectuer un dépôt.");
+            }
         }
     </script>
-
 </body>
-</html><!DOCTYPE html>
+</html>
+<!DOCTYPE html>
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Administration Secrète</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administration RASO - Gestion exclusive</title>
     <style>
-        body { font-family: Arial, sans-serif; background: #222; color: #fff; margin: 0; padding: 20px; }
-        .container { max-width: 600px; margin: auto; background: #333; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
-        h2 { color: #ffc107; text-align: center; }
-        .tx-item { background: #444; padding: 15px; margin: 10px 0; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
-        button { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
-        .btn-valider { background: #28a745; color: white; }
-        .btn-refuser { background: #dc3545; color: white; }
-        .back-link { display: block; text-align: center; margin-top: 20px; color: #ffc107; text-decoration: none; }
+        body { font-family: Arial, sans-serif; background: #1a1a1a; color: white; padding: 20px; }
+        .container { max-width: 500px; margin: 0 auto; background: #2a2a2a; padding: 20px; border-radius: 12px; border: 1px solid #d32f2f; }
+        h2 { color: #ff5252; text-align: center; margin-bottom: 20px; }
+        .card { background: #333; padding: 15px; margin-bottom: 12px; border-radius: 8px; border-left: 4px solid #d32f2f; }
+        .card-info { margin-bottom: 10px; font-size: 14px; line-height: 1.5; }
+        .actions { display: flex; gap: 10px; }
+        .btn { flex: 1; padding: 8px; border: none; border-radius: 6px; font-weight: bold; cursor: pointer; }
+        .btn-valider { background: #2e7d32; color: white; }
+        .btn-refuser { background: #c62828; color: white; }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <h2>Panneau d'Administration Exclusif</h2>
-        <p>Ici, vous validez ou refusez les dépôts de vos membres :</p>
-        
-        <div id="transactions-list">
-            <div class="tx-item">
-                <div>
-                    <strong>Utilisateur :</strong> Jean<br>
-                    <strong>Montant :</strong> 5000 CFA<br>
-                    <strong>Réf :</strong> MTN-123456
+        <h2>Espace Admin RASO</h2>
+        <p style="font-size: 12px; color: #aaa; text-align: center; margin-bottom: 20px;">Accès confidentiel - Validation des transactions</p>
+
+        <div id="demandes-list">
+            <!-- Exemple de demande 1 -->
+            <div class="card" id="tx-1">
+                <div class="card-info">
+                    <strong>Client :</strong> +228 90 ** ** 12<br>
+                    <strong>Type :</strong> Dépôt<br>
+                    <strong>Montant :</strong> 4000 FCFA<br>
+                    <strong>Réf Tx :</strong> T-98745612
                 </div>
-                <div>
-                    <button class="btn-valider" onclick="valider('Jean', 5000)">Valider</button>
-                    <button class="btn-refuser" onclick="refuser()">Refuser</button>
+                <div class="actions">
+                    <button class="btn btn-valider" onclick="traiter('tx-1', 'validé')">Valider</button>
+                    <button class="btn btn-refuser" onclick="traiter('tx-1', 'refusé')">Refuser</button>
+                </div>
+            </div>
+
+            <!-- Exemple de demande 2 -->
+            <div class="card" id="tx-2">
+                <div class="card-info">
+                    <strong>Client :</strong> +228 91 ** ** 45<br>
+                    <strong>Type :</strong> Retrait<br>
+                    <strong>Montant :</strong> 1500 FCFA<br>
+                    <strong>Réf Tx :</strong> R-11223344
+                </div>
+                <div class="actions">
+                    <button class="btn btn-valider" onclick="traiter('tx-2', 'validé')">Valider</button>
+                    <button class="btn btn-refuser" onclick="traiter('tx-2', 'refusé')">Refuser</button>
                 </div>
             </div>
         </div>
-        
-        <a href="index.html" class="back-link">Retour au site public</a>
     </div>
 
     <script>
-        function valider(user, montant) {
-            alert("Le dépôt de " + montant + " CFA pour " + user + " a été validé avec succès !");
-        }
-
-        function refuser() {
-            alert("La transaction a été refusée.");
+        function traiter(id, statut) {
+            alert("La transaction a été " + statut + " avec succès.");
+            document.getElementById(id).style.display = 'none';
         }
     </script>
-
 </body>
 </html>
