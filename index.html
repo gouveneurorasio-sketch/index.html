@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Site Sécurisé</title>
+    <style>
+        body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; background: #f4f4f9; }
+        h1 { color: #333; }
+        p { color: #666; }
+        .btn { display: inline-block; margin-top: 20px; padding: 10px 20px; background: #007bff; color: white; text-decoration: none; border-radius: 5px; font-weight: bold; }
+        .btn:hover { background: #0056b3; }
+    </style>
+</head>
+<body>
+    <h1>Bienvenue sur mon nouveau site sécurisé</h1>
+    <p>Plateforme de transactions et de gestion indépendante.</p>
+    
+    <div>
+        <a href="dashboard.html" class="btn">Accéder à l'Espace Utilisateur</a>
+    </div>
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Mon Tableau de Bord</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #f4f7f6; margin: 0; padding: 20px; }
+        .card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 4px rgba(0,0,0,0.1); max-width: 400px; margin: 20px auto; }
+        input, button { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { background: #28a745; color: white; border: none; cursor: pointer; font-weight: bold; }
+        button:hover { background: #218838; }
+        .balance { font-size: 24px; color: #333; text-align: center; margin-bottom: 20px; }
+        .back-link { display: block; text-align: center; margin-top: 15px; color: #007bff; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="card">
+        <h2>Espace Utilisateur</h2>
+        <div class="balance">Solde : <span id="user-balance">0</span> CFA</div>
+        
+        <hr>
+        
+        <h3>Faire un Dépôt Direct</h3>
+        <input type="number" id="deposit-amount" placeholder="Montant du dépôt (ex: 5000)">
+        <input type="text" id="deposit-ref" placeholder="Référence / Numéro de transaction">
+        <button onclick="submitDeposit()">Soumettre le dépôt</button>
+        
+        <a href="index.html" class="back-link">Retour à l'accueil</a>
+    </div>
+
+    <script>
+        function submitDeposit() {
+            const amount = document.getElementById('deposit-amount').value;
+            const ref = document.getElementById('deposit-ref').value;
+            
+            if(!amount || !ref) {
+                alert("Veuillez remplir tous les champs !");
+                return;
+            }
+            
+            alert("Votre demande de dépôt de " + amount + " CFA a bien été envoyée. En attente de validation.");
+        }
+    </script>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Administration Secrète</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #222; color: #fff; margin: 0; padding: 20px; }
+        .container { max-width: 600px; margin: auto; background: #333; padding: 20px; border-radius: 8px; box-shadow: 0 4px 8px rgba(0,0,0,0.3); }
+        h2 { color: #ffc107; text-align: center; }
+        .tx-item { background: #444; padding: 15px; margin: 10px 0; border-radius: 5px; display: flex; justify-content: space-between; align-items: center; }
+        button { padding: 8px 12px; border: none; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-valider { background: #28a745; color: white; }
+        .btn-refuser { background: #dc3545; color: white; }
+        .back-link { display: block; text-align: center; margin-top: 20px; color: #ffc107; text-decoration: none; }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h2>Panneau d'Administration Exclusif</h2>
+        <p>Ici, vous validez ou refusez les dépôts de vos membres :</p>
+        
+        <div id="transactions-list">
+            <div class="tx-item">
+                <div>
+                    <strong>Utilisateur :</strong> Jean<br>
+                    <strong>Montant :</strong> 5000 CFA<br>
+                    <strong>Réf :</strong> MTN-123456
+                </div>
+                <div>
+                    <button class="btn-valider" onclick="valider('Jean', 5000)">Valider</button>
+                    <button class="btn-refuser" onclick="refuser()">Refuser</button>
+                </div>
+            </div>
+        </div>
+        
+        <a href="index.html" class="back-link">Retour au site public</a>
+    </div>
+
+    <script>
+        function valider(user, montant) {
+            alert("Le dépôt de " + montant + " CFA pour " + user + " a été validé avec succès !");
+        }
+
+        function refuser() {
+            alert("La transaction a été refusée.");
+        }
+    </script>
+
+</body>
+</html>
